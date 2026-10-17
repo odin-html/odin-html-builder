@@ -571,8 +571,8 @@ User :: struct {
 	detail_url: string,
 }
 
-/* The example from the README, verbatim. If this stops compiling or its
-output changes, the documented usage is wrong. */
+/* A representative page fragment, pinned: if this stops compiling or its
+output changes, the builder's documented usage has moved. */
 @(private = "file")
 user_table :: proc(users: []User) {
 	{h.table(a.class("w-full"))
