@@ -1,0 +1,34 @@
+package hx
+
+action :: proc(v: Value) -> Attr { return {"hx-action", v} }
+boost :: proc(v: Value) -> Attr { return {"hx-boost", v} }
+config :: proc(v: Value) -> Attr { return {"hx-config", v} }
+confirm :: proc(v: Value) -> Attr { return {"hx-confirm", v} }
+delete :: proc(v: Value) -> Attr { return {"hx-delete", v} }
+disable :: proc(v: Value) -> Attr { return {"hx-disable", v} }
+encoding :: proc(v: Value) -> Attr { return {"hx-encoding", v} }
+get :: proc(v: Value) -> Attr { return {"hx-get", v} }
+headers :: proc(v: Value) -> Attr { return {"hx-headers", v} }
+history_elt :: proc(v: Value) -> Attr { return {"hx-history-elt", v} }
+ignore :: proc(v: Value) -> Attr { return {"hx-ignore", v} }
+include :: proc(v: Value) -> Attr { return {"hx-include", v} }
+indicator :: proc(v: Value) -> Attr { return {"hx-indicator", v} }
+method :: proc(v: Value) -> Attr { return {"hx-method", v} }
+optimistic :: proc(v: Value) -> Attr { return {"hx-optimistic", v} }
+patch :: proc(v: Value) -> Attr { return {"hx-patch", v} }
+post :: proc(v: Value) -> Attr { return {"hx-post", v} }
+preload :: proc(v: Value) -> Attr { return {"hx-preload", v} }
+preserve :: proc(v: Value) -> Attr { return {"hx-preserve", v} }
+push_url :: proc(v: Value) -> Attr { return {"hx-push-url", v} }
+put :: proc(v: Value) -> Attr { return {"hx-put", v} }
+replace_url :: proc(v: Value) -> Attr { return {"hx-replace-url", v} }
+select :: proc(v: Value) -> Attr { return {"hx-select", v} }
+select_oob :: proc(v: Value) -> Attr { return {"hx-select-oob", v} }
+status :: proc(v: Value) -> Attr { return {"hx-status", v} }
+swap :: proc(v: Value) -> Attr { return {"hx-swap", v} }
+swap_oob :: proc(v: Value) -> Attr { return {"hx-swap-oob", v} }
+sync :: proc(v: Value) -> Attr { return {"hx-sync", v} }
+target :: proc(v: Value) -> Attr { return {"hx-target", v} }
+trigger :: proc(v: Value) -> Attr { return {"hx-trigger", v} }
+validate :: proc(v: Value) -> Attr { return {"hx-validate", v} }
+vals :: proc(v: Value) -> Attr { return {"hx-vals", v} }

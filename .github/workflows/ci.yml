@@ -1,0 +1,68 @@
+# Runs what the README documents as the way to test this project, plus a
+# vet/strict-style pass. The packages depend only on core:, so the suite runs
+# on all three platforms.
+#
+# The steps call odin directly rather than `make test` / `make check`: the
+# Windows runner's shell is pwsh, where the Makefile's shell loop does not run.
+# The flags are the Makefile's, and the two must be kept in step.
+name: CI
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '.metis/**'
+      - 'README.md'
+      - 'LICENSE'
+  pull_request:
+    paths-ignore:
+      - '.metis/**'
+      - 'README.md'
+      - 'LICENSE'
+  workflow_dispatch:
+
+# A new push to the same branch supersedes the run already in flight.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    strategy:
+      # One OS failing should not hide the other's result.
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v5
+      - uses: laytan/setup-odin@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release: latest
+
+      - name: Odin version
+        run: odin version
+
+      # The collection is the repository root, so `html:html/a` and friends
+      # resolve against the checkout itself. Separate steps rather than one
+      # multi-line run, because on Windows the shell is pwsh and only the last
+      # command's exit code propagates.
+      - name: Vet (the suite, and the three packages it imports)
+        run: odin check html -no-entry-point -vet -strict-style -collection:html=.
+
+      - name: Vet (attributes)
+        run: odin check html/a -no-entry-point -vet -strict-style -collection:html=.
+
+      - name: Vet (elements)
+        run: odin check html/h -no-entry-point -vet -strict-style -collection:html=.
+
+      - name: Vet (htmx)
+        run: odin check html/hx -no-entry-point -vet -strict-style -collection:html=.
+
+      # ODIN_TEST_FAIL_ON_BAD_MEMORY promotes leaks and bad frees from
+      # warnings, which a passing build hides, to failures -- the same
+      # discipline the Makefile applies.
+      - name: Unit tests
+        run: odin test html -collection:html=. -define:ODIN_TEST_FAIL_ON_BAD_MEMORY=true
